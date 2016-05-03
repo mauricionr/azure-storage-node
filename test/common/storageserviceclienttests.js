@@ -28,7 +28,7 @@ var StorageServiceClientConstants = Constants.StorageServiceClientConstants;
 describe('StorageServiceClientTests', function () {
 
   it('devStore', function (done) {
-    var devStoreCreds = azure.generateDevelopmentStorageCredendentials();
+    var devStoreCreds = azure.generateDevelopmentStorageCredentials();
     var devStoreBlobService = azure.createBlobService(devStoreCreds);
 
     assert.strictEqual(devStoreBlobService.storageAccount, StorageServiceClientConstants.DEVSTORE_STORAGE_ACCOUNT);
@@ -36,7 +36,7 @@ describe('StorageServiceClientTests', function () {
     assert.strictEqual(devStoreBlobService.host.primaryHost, 'http://127.0.0.1:10000/devstoreaccount1');
     assert.strictEqual(devStoreBlobService.host.secondaryHost, 'http://127.0.0.1:10000/devstoreaccount1-secondary');
 
-    devStoreCreds = azure.generateDevelopmentStorageCredendentials('http://ipv4.fiddler');
+    devStoreCreds = azure.generateDevelopmentStorageCredentials('http://ipv4.fiddler');
     devStoreBlobService = azure.createBlobService(devStoreCreds);
 
     assert.strictEqual(devStoreBlobService.storageAccount, StorageServiceClientConstants.DEVSTORE_STORAGE_ACCOUNT);
@@ -91,7 +91,7 @@ describe('StorageServiceClientTests', function () {
     });
   });
 
-  describe('NormalizedErrorsAreErrors', function () {
+  describe('NormalizedErrors_normalizeError', function () {
     it('should work', function (done) {
       var error = {
         Error: {
@@ -103,7 +103,7 @@ describe('StorageServiceClientTests', function () {
 
       var normalizedError = StorageServiceClient._normalizeError(error);
       normalizedError.should.be.an.instanceOf(Error);
-      normalizedError.should.have.keys('detail', 'resultcode', 'somethingelse');
+      normalizedError.should.have.keys('name', 'message', 'code', 'detail', 'resultcode', 'somethingelse');
 
       done();
     });
